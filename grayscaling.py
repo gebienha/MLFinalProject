@@ -40,13 +40,13 @@ from PIL import Image
 import os
 import csv
 import numpy as np
+import pillow_heif  # Enables HEIC/HEIF support
 
 # Define the dataset directory
-dataset_dir = r"C:\Users\IdeaPad\Downloads\dataset1\bisindo\images\val"
-#"C:\Users\IdeaPad\Downloads\dataset1\bisindo\images\train\A"
+dataset_dir = r"C:\Users\IdeaPad\Downloads\gab-20241118T132857Z-001\gab"
 
 # CSV file to save the pixel data
-csv_file = "dataset1_test.csv"
+csv_file = "dataset_gab.csv"
 
 # Open the CSV file for writing
 with open(csv_file, mode="w", newline="") as file:
@@ -60,17 +60,26 @@ with open(csv_file, mode="w", newline="") as file:
         for folder_name in sorted(dirs):  # Process subdirectories alphabetically
             print(f"Processing {folder_name}")
             folder_path = os.path.join(subdir, folder_name)
-            if folder_name == 'NOTHING' :
+            if folder_name == 'NOTHING':
                 label = 26
-            else :
+            else:
                 label = ord(folder_name.upper()) - ord('A')  # Convert folder name to label (A=0, B=1, ..., Z=25)
             if 0 <= label <= 26:  # Ensure the folder is A-Z
                 for filename in os.listdir(folder_path):
-                    if filename.lower().endswith(('.jpg', '.jpeg', '.png')):
+                    if filename.lower().endswith(('.jpg', '.jpeg', '.png', '.heic', '.heif')):
                         try:
-                            # Load and process the image
+                            # Load the image
                             img_path = os.path.join(folder_path, filename)
-                            image = Image.open(img_path).convert('L').resize((28, 28))  # Grayscale and resize to 28x28
+                            if filename.lower().endswith(('.heic', '.heif')):
+                                heif_file = pillow_heif.read_heif(img_path)
+                                image = Image.frombytes(
+                                    heif_file.mode, heif_file.size, heif_file.data
+                                )
+                            else:
+                                image = Image.open(img_path)
+                            
+                            # Process the image
+                            image = image.convert('L').resize((28, 28))  # Grayscale and resize to 28x28
                             pixels = np.array(image).flatten()  # Flatten the image into a 1D array
                             
                             # Write label and pixel data to CSV
@@ -79,4 +88,3 @@ with open(csv_file, mode="w", newline="") as file:
                             print(f"Error processing {img_path}: {e}")
 
 print(f"Image pixel data saved to {csv_file}")
-
