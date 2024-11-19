@@ -2,7 +2,7 @@ import pandas as pd
 
 # File paths
 existing_file = "bisindo_dataset_train_2data.csv"  # The file you want to append data to
-new_file = "dataset_gab.csv"            # The file containing new data
+new_file = "dataset_noise.csv"            # The file containing new data
 output_file = "bisindo_dataset_train_2data.csv"     # Output file (optional, can overwrite existing_file)
 
 # Read the existing data
