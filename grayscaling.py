@@ -43,10 +43,10 @@ import numpy as np
 import pillow_heif  # Enables HEIC/HEIF support
 
 # Define the dataset directory
-dataset_dir = r"C:\Users\IdeaPad\Downloads\gab-20241118T132857Z-001\gab"
+dataset_dir = r"C:\Users\IdeaPad\Downloads\bisindo-dataset-noise"
 
 # CSV file to save the pixel data
-csv_file = "dataset_gab.csv"
+csv_file = "dataset_noise.csv"
 
 # Open the CSV file for writing
 with open(csv_file, mode="w", newline="") as file:
