@@ -1,9 +1,9 @@
 import pandas as pd
 
 # File paths
-existing_file = "bisindo_dataset_image_pixels_test.csv"  # The file you want to append data to
-new_file = "dataset1_test.csv"            # The file containing new data
-output_file = "bisindo_dataset_test_2data.csv"     # Output file (optional, can overwrite existing_file)
+existing_file = "bisindo_dataset_train_2data.csv"  # The file you want to append data to
+new_file = "dataset_gab.csv"            # The file containing new data
+output_file = "bisindo_dataset_train_2data.csv"     # Output file (optional, can overwrite existing_file)
 
 # Read the existing data
 try:
